@@ -1,6 +1,6 @@
 import './i18n';
 import './App.css';
-import { Routes, Route, Navigate, useParams } from 'react-router-dom';
+import { Routes, Route, Navigate, useParams, useNavigate } from 'react-router-dom';
 import { CATEGORIES } from './features/data';
 import { CategorySelection } from './features/selection';
 import { GameScreen, GameProvider, useGame } from './features/game';
@@ -19,20 +19,18 @@ function HomeRoute() {
 
 function StudyRoute() {
   const { category } = useParams();
-  const { resetGame, startStudy, studyCategory, gameState } = useGame();
+  const navigate = useNavigate();
 
   // Validate category parameter
   if (!validCategories.includes(category)) {
     return <Navigate to="/" replace />;
   }
 
-  // If coming directly to this route, set up study state
-  if (gameState !== 'studying' || studyCategory !== category) {
-    // Use effect would be better but for simplicity, trigger on render
-    startStudy(category);
-  }
+  const handleBack = () => {
+    navigate('/');
+  };
 
-  return <StudyScreen category={category} onBack={resetGame} />;
+  return <StudyScreen category={category} onBack={handleBack} />;
 }
 
 function GameRoute() {

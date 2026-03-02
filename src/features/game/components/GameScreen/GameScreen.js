@@ -58,7 +58,7 @@ export const GameScreen = ({
   return (
     <div className="game-screen">
       <button className="back-button" onClick={onReset}>
-        {t("buttons.backToCategories")}
+        &larr; {t("buttons.backToCategories")}
       </button>
 
       <div className="game-screen__content">
