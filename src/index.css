@@ -48,3 +48,9 @@ button {
 input {
   font-family: inherit;
 }
+
+select {
+  font-family: inherit;
+  font-size: 16px;           /* Minimum 16px prevents iOS auto-zoom */
+  touch-action: manipulation;
+}

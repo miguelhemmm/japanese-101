@@ -5,7 +5,6 @@
   padding: 1rem 2rem;
   max-width: 600px;
   margin: 0 auto;
-  min-height: 100vh;
 
   .game-screen__content {
     display: flex;
