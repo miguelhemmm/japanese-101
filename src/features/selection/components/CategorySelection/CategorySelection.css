@@ -58,3 +58,29 @@
   min-width: 120px;
   opacity: 0.9;
 }
+
+.start-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.practice-count-select {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.practice-count-select:hover {
+  border-color: var(--primary-color);
+}
+
+.practice-count-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}

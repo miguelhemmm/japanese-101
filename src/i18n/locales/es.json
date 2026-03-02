@@ -55,5 +55,8 @@
     "dakuten": "Dakuten (sonorizado)",
     "handakuten": "Handakuten (sonidos con p)",
     "combination": "Combinaciones"
+  },
+  "practice": {
+    "all": "Todos"
   }
 }

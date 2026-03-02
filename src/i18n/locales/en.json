@@ -55,5 +55,8 @@
     "dakuten": "Dakuten (voiced)",
     "handakuten": "Handakuten (p-sounds)",
     "combination": "Combinations"
+  },
+  "practice": {
+    "all": "All"
   }
 }

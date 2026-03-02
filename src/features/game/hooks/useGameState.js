@@ -61,15 +61,16 @@ export const useGameState = (characters) => {
     total: questions.length
   }), [currentIndex, questions.length]);
 
-  const initializeGame = useCallback((selectedCategories) => {
+  const initializeGame = useCallback((selectedCategories, limit = 'all') => {
     // Filter characters by selected categories
     const filteredChars = characters.filter(c =>
       selectedCategories.includes(c.category)
     );
 
-    // Shuffle and set questions
+    // Shuffle and limit questions
     const shuffled = shuffleArray(filteredChars);
-    setQuestions(shuffled);
+    const limitedQuestions = limit === 'all' ? shuffled : shuffled.slice(0, Number(limit));
+    setQuestions(limitedQuestions);
     setCurrentIndex(0);
     setScore({ correct: 0, total: 0 });
     setStreak(0);
