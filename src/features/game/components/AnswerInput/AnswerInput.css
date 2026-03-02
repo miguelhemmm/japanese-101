@@ -1,0 +1,52 @@
+.answer-input {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.answer-field {
+  flex: 1;
+  padding: 0.875rem 1rem;
+  font-size: 1.125rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--input-bg);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.answer-field:focus {
+  border-color: var(--primary-color);
+}
+
+.answer-field:disabled {
+  background: var(--disabled-bg);
+  cursor: not-allowed;
+}
+
+.answer-field::placeholder {
+  color: var(--text-secondary);
+}
+
+.submit-button {
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.submit-button:disabled {
+  background: var(--disabled-color);
+  cursor: not-allowed;
+}

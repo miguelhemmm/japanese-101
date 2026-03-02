@@ -1,23 +1,46 @@
-import logo from './logo.svg';
+import './i18n';
 import './App.css';
+import { GAME_STATES, getAllCharacters } from './features/data';
+import { CategorySelection } from './features/selection';
+import { GameScreen, useGameState } from './features/game';
+import { LanguageToggle } from './components/LanguageToggle';
+
+const allCharacters = getAllCharacters();
 
 function App() {
+  const {
+    gameState,
+    currentQuestion,
+    progress,
+    score,
+    streak,
+    lastAnswer,
+    initializeGame,
+    submitAnswer,
+    nextQuestion,
+    resetGame
+  } = useGameState(allCharacters);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <LanguageToggle />
+      <main className="app-content">
+        {gameState === GAME_STATES.SELECTING ? (
+          <CategorySelection onStartGame={initializeGame} />
+        ) : (
+          <GameScreen
+            gameState={gameState}
+            currentQuestion={currentQuestion}
+            progress={progress}
+            score={score}
+            streak={streak}
+            lastAnswer={lastAnswer}
+            onSubmitAnswer={submitAnswer}
+            onNextQuestion={nextQuestion}
+            onReset={resetGame}
+          />
+        )}
+      </main>
     </div>
   );
 }

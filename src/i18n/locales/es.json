@@ -1,0 +1,49 @@
+{
+  "app": {
+    "title": "Práctica de Japonés 101",
+    "subtitle": "Selecciona categorías para practicar"
+  },
+  "categories": {
+    "hiragana": {
+      "name": "Hiragana",
+      "description": "Silabario japonés básico (107 caracteres)"
+    },
+    "katakana": {
+      "name": "Katakana",
+      "description": "Usado para palabras extranjeras (107 caracteres)"
+    },
+    "kanji": {
+      "name": "Kanji",
+      "description": "Caracteres chinos con significados (~50)"
+    },
+    "verbs": {
+      "name": "Verbos",
+      "description": "Verbos comunes en forma de diccionario (~50)"
+    }
+  },
+  "buttons": {
+    "startPractice": "Comenzar Práctica",
+    "check": "Verificar",
+    "next": "Siguiente",
+    "playAgain": "Jugar de Nuevo",
+    "backToCategories": "Volver a Categorías"
+  },
+  "game": {
+    "progress": "Progreso",
+    "correct": "Correcto",
+    "streak": "Racha",
+    "total": "Total",
+    "accuracy": "Precisión",
+    "practiceComplete": "¡Práctica Completada!"
+  },
+  "feedback": {
+    "correct": "¡Correcto!",
+    "incorrect": "Incorrecto",
+    "yourAnswer": "Tu respuesta:",
+    "correctAnswer": "Correcto:"
+  },
+  "input": {
+    "placeholder": "Escribe tu respuesta..."
+  },
+  "selected": "seleccionadas"
+}

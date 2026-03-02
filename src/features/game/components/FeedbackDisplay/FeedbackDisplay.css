@@ -1,0 +1,90 @@
+.feedback-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feedback-display.correct {
+  background: var(--success-bg);
+}
+
+.feedback-display.incorrect {
+  background: var(--error-bg);
+}
+
+.feedback-icon {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.feedback-display.correct .feedback-icon {
+  color: var(--success-color);
+}
+
+.feedback-display.incorrect .feedback-icon {
+  color: var(--error-color);
+}
+
+.feedback-message {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.feedback-display.correct .feedback-message {
+  color: var(--success-color);
+}
+
+.feedback-display.incorrect .feedback-message {
+  color: var(--error-color);
+}
+
+.feedback-details {
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.your-answer span,
+.correct-answer span {
+  font-weight: 600;
+}
+
+.english-meaning {
+  color: var(--text-secondary);
+}
+
+.spanish-meaning {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.next-button {
+  margin-top: 0.5rem;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.next-button:hover {
+  background: var(--primary-hover);
+}

@@ -1,0 +1,30 @@
+.character-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.character-category {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  background: var(--category-badge-bg);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+}
+
+.character-text {
+  font-size: clamp(4rem, 15vw, 8rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--text-primary);
+  font-family: "Hiragino Kaku Gothic Pro", "Yu Gothic", "Meiryo", sans-serif;
+}
+
+.character-text rt {
+  font-size: 0.35em;
+  color: var(--text-secondary);
+}

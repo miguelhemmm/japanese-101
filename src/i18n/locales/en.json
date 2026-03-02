@@ -1,0 +1,49 @@
+{
+  "app": {
+    "title": "Japanese Memory Game",
+    "subtitle": "Select categories to practice"
+  },
+  "categories": {
+    "hiragana": {
+      "name": "Hiragana",
+      "description": "Basic Japanese syllabary (107 characters)"
+    },
+    "katakana": {
+      "name": "Katakana",
+      "description": "Used for foreign words (107 characters)"
+    },
+    "kanji": {
+      "name": "Kanji",
+      "description": "Chinese characters with meanings (~50)"
+    },
+    "verbs": {
+      "name": "Verbs",
+      "description": "Common verbs in dictionary form (~50)"
+    }
+  },
+  "buttons": {
+    "startPractice": "Start Practice",
+    "check": "Check",
+    "next": "Next",
+    "playAgain": "Play Again",
+    "backToCategories": "Back to Categories"
+  },
+  "game": {
+    "progress": "Progress",
+    "correct": "Correct",
+    "streak": "Streak",
+    "total": "Total",
+    "accuracy": "Accuracy",
+    "practiceComplete": "Practice Complete!"
+  },
+  "feedback": {
+    "correct": "Correct!",
+    "incorrect": "Incorrect",
+    "yourAnswer": "Your answer:",
+    "correctAnswer": "Correct:"
+  },
+  "input": {
+    "placeholder": "Type your answer..."
+  },
+  "selected": "selected"
+}
