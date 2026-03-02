@@ -4,7 +4,9 @@
   border-radius: 8px;
   padding: 0.75rem;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .study-card:hover {
@@ -49,11 +51,32 @@
 .study-card__character--large {
   font-size: 2.5rem;
   line-height: 1;
+  display: inline-flex;
+  align-items: flex-end;
+}
+
+/* Ruby-like structure for kanji with furigana */
+.study-card__ruby {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .study-card__furigana {
-  font-size: 0.75rem;
+  font-size: 0.925rem;
   color: var(--text-secondary);
+  line-height: 1.2;
+}
+
+.study-card__kanji {
+  line-height: 1;
+}
+
+.study-card__plain-char {
+  display: inline-flex;
+  align-items: flex-end;
+  line-height: 1;
 }
 
 .study-card__info {
