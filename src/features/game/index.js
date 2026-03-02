@@ -4,3 +4,4 @@ export { AnswerInput } from './components/AnswerInput';
 export { FeedbackDisplay } from './components/FeedbackDisplay';
 export { ScoreBoard } from './components/ScoreBoard';
 export { useGameState } from './hooks/useGameState';
+export { GameProvider, useGame } from './context';

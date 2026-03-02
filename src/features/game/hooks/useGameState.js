@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GAME_STATES, CATEGORIES } from '../../data';
 
 // Fisher-Yates shuffle algorithm
@@ -44,6 +45,7 @@ const isAnswerCorrect = (userAnswer, correctItem) => {
 };
 
 export const useGameState = (characters) => {
+  const navigate = useNavigate();
   const [gameState, setGameState] = useState(GAME_STATES.SELECTING);
   const [studyCategory, setStudyCategory] = useState(null);
   const [questions, setQuestions] = useState([]);
@@ -51,6 +53,7 @@ export const useGameState = (characters) => {
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [streak, setStreak] = useState(0);
   const [lastAnswer, setLastAnswer] = useState(null);
+  const [hasActiveGame, setHasActiveGame] = useState(false);
 
   const currentQuestion = useMemo(() => {
     return questions[currentIndex] || null;
@@ -76,7 +79,9 @@ export const useGameState = (characters) => {
     setStreak(0);
     setLastAnswer(null);
     setGameState(GAME_STATES.PLAYING);
-  }, [characters]);
+    setHasActiveGame(true);
+    navigate('/game');
+  }, [characters, navigate]);
 
   const submitAnswer = useCallback((answer) => {
     if (!currentQuestion || gameState !== GAME_STATES.PLAYING) return;
@@ -121,12 +126,15 @@ export const useGameState = (characters) => {
     setScore({ correct: 0, total: 0 });
     setStreak(0);
     setLastAnswer(null);
-  }, []);
+    setHasActiveGame(false);
+    navigate('/');
+  }, [navigate]);
 
   const startStudy = useCallback((category) => {
     setStudyCategory(category);
     setGameState(GAME_STATES.STUDYING);
-  }, []);
+    navigate(`/study/${category}`);
+  }, [navigate]);
 
   return {
     gameState,
@@ -136,6 +144,7 @@ export const useGameState = (characters) => {
     score,
     streak,
     lastAnswer,
+    hasActiveGame,
     initializeGame,
     submitAnswer,
     nextQuestion,
