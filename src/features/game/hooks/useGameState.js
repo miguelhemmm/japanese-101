@@ -45,6 +45,7 @@ const isAnswerCorrect = (userAnswer, correctItem) => {
 
 export const useGameState = (characters) => {
   const [gameState, setGameState] = useState(GAME_STATES.SELECTING);
+  const [studyCategory, setStudyCategory] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState({ correct: 0, total: 0 });
@@ -113,6 +114,7 @@ export const useGameState = (characters) => {
 
   const resetGame = useCallback(() => {
     setGameState(GAME_STATES.SELECTING);
+    setStudyCategory(null);
     setQuestions([]);
     setCurrentIndex(0);
     setScore({ correct: 0, total: 0 });
@@ -120,8 +122,14 @@ export const useGameState = (characters) => {
     setLastAnswer(null);
   }, []);
 
+  const startStudy = useCallback((category) => {
+    setStudyCategory(category);
+    setGameState(GAME_STATES.STUDYING);
+  }, []);
+
   return {
     gameState,
+    studyCategory,
     currentQuestion,
     progress,
     score,
@@ -130,6 +138,7 @@ export const useGameState = (characters) => {
     initializeGame,
     submitAnswer,
     nextQuestion,
-    resetGame
+    resetGame,
+    startStudy
   };
 };

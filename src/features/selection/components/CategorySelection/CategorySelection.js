@@ -4,7 +4,7 @@ import { CATEGORIES, CATEGORY_INFO } from '../../../data';
 import { CategoryCard } from '../CategoryCard';
 import './CategorySelection.css';
 
-export const CategorySelection = ({ onStartGame }) => {
+export const CategorySelection = ({ onStartGame, onStudy }) => {
   const { t } = useTranslation();
   const [selectedCategories, setSelectedCategories] = useState([]);
 
@@ -35,6 +35,7 @@ export const CategorySelection = ({ onStartGame }) => {
             info={CATEGORY_INFO[category]}
             isSelected={selectedCategories.includes(category)}
             onToggle={toggleCategory}
+            onStudy={onStudy}
           />
         ))}
       </div>

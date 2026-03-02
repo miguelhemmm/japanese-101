@@ -23,6 +23,7 @@
   },
   "buttons": {
     "startPractice": "Start Practice",
+    "study": "Study",
     "check": "Check",
     "next": "Next",
     "playAgain": "Play Again",
@@ -45,5 +46,14 @@
   "input": {
     "placeholder": "Type your answer..."
   },
-  "selected": "selected"
+  "selected": "selected",
+  "study": {
+    "characters": "characters"
+  },
+  "subcategories": {
+    "basic": "Basic",
+    "dakuten": "Dakuten (voiced)",
+    "handakuten": "Handakuten (p-sounds)",
+    "combination": "Combinations"
+  }
 }

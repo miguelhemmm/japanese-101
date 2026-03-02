@@ -1,0 +1,84 @@
+.study-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.study-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Kana cards - compact */
+.study-card--kana {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+}
+
+.study-card--kana .study-card__character {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.study-card--kana .study-card__romanji {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Detailed cards - Kanji/Verbs */
+.study-card--detailed {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.study-card__top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.study-card__character--large {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.study-card__furigana {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.study-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.5rem;
+}
+
+.study-card--detailed .study-card__romanji {
+  font-size: 0.875rem;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.study-card__meaning {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.study-card__meaning--english {
+  color: var(--text-primary);
+}
+
+.study-card__meaning--spanish {
+  font-style: italic;
+}

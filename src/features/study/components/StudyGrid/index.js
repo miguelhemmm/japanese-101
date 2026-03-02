@@ -1,0 +1,1 @@
+export { StudyGrid } from './StudyGrid';

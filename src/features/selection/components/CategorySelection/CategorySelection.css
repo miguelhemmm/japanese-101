@@ -30,7 +30,7 @@
 
 .start-button {
   padding: 1rem 2rem;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: white;
   background: var(--primary-color);
@@ -54,6 +54,7 @@
 }
 
 .selected-count {
-  font-size: 1rem;
+  font-size: 0.8rem;
+  min-width: 120px;
   opacity: 0.9;
 }

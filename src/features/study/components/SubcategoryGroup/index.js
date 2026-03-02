@@ -1,0 +1,1 @@
+export { SubcategoryGroup } from './SubcategoryGroup';

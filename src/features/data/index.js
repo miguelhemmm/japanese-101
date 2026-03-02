@@ -4,7 +4,7 @@ import { kanji } from './kanji';
 import { verbs } from './verbs';
 import { CATEGORIES } from './constants';
 
-export { CATEGORIES, SUBCATEGORIES, GAME_STATES, CATEGORY_INFO } from './constants';
+export { CATEGORIES, SUBCATEGORIES, GAME_STATES, CATEGORY_INFO, SUBCATEGORY_INFO } from './constants';
 export { hiragana } from './hiragana';
 export { katakana } from './katakana';
 export { kanji } from './kanji';

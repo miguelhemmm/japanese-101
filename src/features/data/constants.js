@@ -14,9 +14,25 @@ export const SUBCATEGORIES = {
 
 export const GAME_STATES = {
   SELECTING: 'selecting',
+  STUDYING: 'studying',
   PLAYING: 'playing',
   FEEDBACK: 'feedback',
   COMPLETED: 'completed'
+};
+
+export const SUBCATEGORY_INFO = {
+  [SUBCATEGORIES.BASIC]: {
+    nameKey: 'subcategories.basic'
+  },
+  [SUBCATEGORIES.DAKUTEN]: {
+    nameKey: 'subcategories.dakuten'
+  },
+  [SUBCATEGORIES.HANDAKUTEN]: {
+    nameKey: 'subcategories.handakuten'
+  },
+  [SUBCATEGORIES.COMBINATION]: {
+    nameKey: 'subcategories.combination'
+  }
 };
 
 export const CATEGORY_INFO = {

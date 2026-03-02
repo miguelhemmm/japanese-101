@@ -1,0 +1,33 @@
+.study-grid {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+/* Compact grid for Hiragana/Katakana */
+.study-grid--compact {
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+}
+
+@media (min-width: 768px) {
+  .study-grid--compact {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+}
+
+/* Detailed grid for Kanji/Verbs */
+.study-grid--detailed {
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+}
+
+@media (min-width: 768px) {
+  .study-grid--detailed {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .study-grid--detailed {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
