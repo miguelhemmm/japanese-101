@@ -33,6 +33,7 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
+    "deploy:redirect": "gh-pages -d gh-pages-redirect",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
