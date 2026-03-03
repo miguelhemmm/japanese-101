@@ -71,7 +71,10 @@ describe('CategoryCard', () => {
       />
     );
 
-    expect(screen.getByText('✓')).toBeInTheDocument();
+    // Checkmark is visible when card is selected (via CSS opacity)
+    const card = document.querySelector('.category-card');
+    expect(card).toHaveClass('selected');
+    expect(document.querySelector('.fa-check')).toBeInTheDocument();
   });
 
   test('does not show checkmark when isSelected is false', () => {
@@ -84,7 +87,9 @@ describe('CategoryCard', () => {
       />
     );
 
-    expect(screen.queryByText('✓')).not.toBeInTheDocument();
+    // Checkmark is hidden when card is not selected (via CSS opacity)
+    const card = document.querySelector('.category-card');
+    expect(card).not.toHaveClass('selected');
   });
 
   test('applies selected CSS class when selected', () => {
@@ -97,8 +102,8 @@ describe('CategoryCard', () => {
       />
     );
 
-    const button = screen.getByRole('button');
-    expect(button).toHaveClass('selected');
+    const card = document.querySelector('.category-card');
+    expect(card).toHaveClass('selected');
   });
 
   test('does not apply selected CSS class when not selected', () => {
@@ -111,8 +116,8 @@ describe('CategoryCard', () => {
       />
     );
 
-    const button = screen.getByRole('button');
-    expect(button).not.toHaveClass('selected');
+    const card = document.querySelector('.category-card');
+    expect(card).not.toHaveClass('selected');
   });
 
   test('onToggle callback fires with category on click', () => {
@@ -125,7 +130,7 @@ describe('CategoryCard', () => {
       />
     );
 
-    const button = screen.getByRole('button');
+    const button = document.querySelector('.category-card__select');
     fireEvent.click(button);
 
     expect(mockOnToggle).toHaveBeenCalledTimes(1);

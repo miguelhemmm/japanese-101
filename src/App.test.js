@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import App from "./App";
-import { useGameState } from "./features/game";
+import { useGame } from "./features/game";
 
 // Mock i18n before any imports
 jest.mock("./i18n", () => ({}));
@@ -13,12 +14,13 @@ jest.mock("react-i18next", () => ({
   }),
 }));
 
-// Mock the game state hook
+// Mock useGame hook directly
 jest.mock("./features/game", () => {
   const actual = jest.requireActual("./features/game");
   return {
     ...actual,
-    useGameState: jest.fn(),
+    useGame: jest.fn(),
+    GameProvider: ({ children }) => children,
   };
 });
 
@@ -61,7 +63,7 @@ jest.mock("./features/data", () => ({
   },
 }));
 
-const mockUseGameState = useGameState;
+const mockUseGame = useGame;
 
 describe("App", () => {
   beforeEach(() => {
@@ -69,20 +71,26 @@ describe("App", () => {
   });
 
   test("renders CategorySelection when gameState is SELECTING", () => {
-    mockUseGameState.mockReturnValue({
+    mockUseGame.mockReturnValue({
       gameState: "selecting",
+      hasActiveGame: false,
       currentQuestion: null,
       progress: { current: 0, total: 0 },
       score: { correct: 0, total: 0 },
       streak: 0,
       lastAnswer: null,
       initializeGame: jest.fn(),
+      startStudy: jest.fn(),
       submitAnswer: jest.fn(),
       nextQuestion: jest.fn(),
       resetGame: jest.fn(),
     });
 
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
 
     // CategorySelection renders the app title
     expect(screen.getByText("app.title")).toBeInTheDocument();
@@ -90,8 +98,9 @@ describe("App", () => {
   });
 
   test("renders GameScreen when gameState is PLAYING", () => {
-    mockUseGameState.mockReturnValue({
+    mockUseGame.mockReturnValue({
       gameState: "playing",
+      hasActiveGame: true,
       currentQuestion: {
         id: "h_a",
         character: "あ",
@@ -103,21 +112,27 @@ describe("App", () => {
       streak: 0,
       lastAnswer: null,
       initializeGame: jest.fn(),
+      startStudy: jest.fn(),
       submitAnswer: jest.fn(),
       nextQuestion: jest.fn(),
       resetGame: jest.fn(),
     });
 
-    render(<App />);
+    render(
+      <MemoryRouter initialEntries={["/game"]}>
+        <App />
+      </MemoryRouter>
+    );
 
     // GameScreen should render
-    expect(screen.getByText("buttons.backToCategories")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /buttons.backToCategories/i })).toBeInTheDocument();
     expect(screen.getByText("あ")).toBeInTheDocument();
   });
 
   test("renders GameScreen when gameState is FEEDBACK", () => {
-    mockUseGameState.mockReturnValue({
+    mockUseGame.mockReturnValue({
       gameState: "feedback",
+      hasActiveGame: true,
       currentQuestion: {
         id: "h_a",
         character: "あ",
@@ -133,32 +148,43 @@ describe("App", () => {
         correctAnswers: { romanji: ["a"] },
       },
       initializeGame: jest.fn(),
+      startStudy: jest.fn(),
       submitAnswer: jest.fn(),
       nextQuestion: jest.fn(),
       resetGame: jest.fn(),
     });
 
-    render(<App />);
+    render(
+      <MemoryRouter initialEntries={["/game"]}>
+        <App />
+      </MemoryRouter>
+    );
 
-    expect(screen.getByText("buttons.backToCategories")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /buttons.backToCategories/i })).toBeInTheDocument();
     expect(screen.getByText("feedback.correct")).toBeInTheDocument();
   });
 
   test("LanguageToggle is always rendered in header", () => {
-    mockUseGameState.mockReturnValue({
+    mockUseGame.mockReturnValue({
       gameState: "selecting",
+      hasActiveGame: false,
       currentQuestion: null,
       progress: { current: 0, total: 0 },
       score: { correct: 0, total: 0 },
       streak: 0,
       lastAnswer: null,
       initializeGame: jest.fn(),
+      startStudy: jest.fn(),
       submitAnswer: jest.fn(),
       nextQuestion: jest.fn(),
       resetGame: jest.fn(),
     });
 
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
 
     // LanguageToggle should render with ES button (since language is 'en')
     expect(screen.getByRole("button", { name: "ES" })).toBeInTheDocument();

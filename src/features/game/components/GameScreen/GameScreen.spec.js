@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { GameScreen } from './GameScreen';
 
 // Mock react-i18next
@@ -53,11 +54,13 @@ describe('GameScreen', () => {
 
   test('renders completion screen when COMPLETED', () => {
     render(
-      <GameScreen
-        {...defaultProps}
-        gameState="completed"
-        score={{ correct: 8, total: 10 }}
-      />
+      <MemoryRouter>
+        <GameScreen
+          {...defaultProps}
+          gameState="completed"
+          score={{ correct: 8, total: 10 }}
+        />
+      </MemoryRouter>
     );
 
     expect(screen.getByText('game.practiceComplete')).toBeInTheDocument();
@@ -66,11 +69,13 @@ describe('GameScreen', () => {
 
   test('shows final score and accuracy on completion', () => {
     render(
-      <GameScreen
-        {...defaultProps}
-        gameState="completed"
-        score={{ correct: 8, total: 10 }}
-      />
+      <MemoryRouter>
+        <GameScreen
+          {...defaultProps}
+          gameState="completed"
+          score={{ correct: 8, total: 10 }}
+        />
+      </MemoryRouter>
     );
 
     expect(screen.getByText('8')).toBeInTheDocument(); // correct
@@ -79,7 +84,11 @@ describe('GameScreen', () => {
   });
 
   test('renders game screen with scoreboard when PLAYING', () => {
-    render(<GameScreen {...defaultProps} />);
+    render(
+      <MemoryRouter>
+        <GameScreen {...defaultProps} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('game.progress')).toBeInTheDocument();
     expect(screen.getByText('game.correct')).toBeInTheDocument();
@@ -87,7 +96,11 @@ describe('GameScreen', () => {
   });
 
   test('shows AnswerInput when PLAYING', () => {
-    render(<GameScreen {...defaultProps} />);
+    render(
+      <MemoryRouter>
+        <GameScreen {...defaultProps} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByPlaceholderText('input.placeholder')).toBeInTheDocument();
     expect(screen.getByText('buttons.check')).toBeInTheDocument();
@@ -95,15 +108,17 @@ describe('GameScreen', () => {
 
   test('does not show AnswerInput when FEEDBACK', () => {
     render(
-      <GameScreen
-        {...defaultProps}
-        gameState="feedback"
-        lastAnswer={{
-          correct: true,
-          userAnswer: 'a',
-          correctAnswers: { romanji: ['a'] }
-        }}
-      />
+      <MemoryRouter>
+        <GameScreen
+          {...defaultProps}
+          gameState="feedback"
+          lastAnswer={{
+            correct: true,
+            userAnswer: 'a',
+            correctAnswers: { romanji: ['a'] }
+          }}
+        />
+      </MemoryRouter>
     );
 
     expect(screen.queryByPlaceholderText('input.placeholder')).not.toBeInTheDocument();
@@ -111,15 +126,17 @@ describe('GameScreen', () => {
 
   test('shows FeedbackDisplay when FEEDBACK', () => {
     render(
-      <GameScreen
-        {...defaultProps}
-        gameState="feedback"
-        lastAnswer={{
-          correct: true,
-          userAnswer: 'a',
-          correctAnswers: { romanji: ['a'] }
-        }}
-      />
+      <MemoryRouter>
+        <GameScreen
+          {...defaultProps}
+          gameState="feedback"
+          lastAnswer={{
+            correct: true,
+            userAnswer: 'a',
+            correctAnswers: { romanji: ['a'] }
+          }}
+        />
+      </MemoryRouter>
     );
 
     expect(screen.getByText('feedback.correct')).toBeInTheDocument();
@@ -127,9 +144,13 @@ describe('GameScreen', () => {
   });
 
   test('back button calls onReset', () => {
-    render(<GameScreen {...defaultProps} />);
+    render(
+      <MemoryRouter>
+        <GameScreen {...defaultProps} />
+      </MemoryRouter>
+    );
 
-    const backButton = screen.getByText('buttons.backToCategories');
+    const backButton = screen.getByRole('button', { name: /buttons.backToCategories/i });
     fireEvent.click(backButton);
 
     expect(mockOnReset).toHaveBeenCalledTimes(1);
@@ -137,11 +158,13 @@ describe('GameScreen', () => {
 
   test('play again button calls onReset on completion screen', () => {
     render(
-      <GameScreen
-        {...defaultProps}
-        gameState="completed"
-        score={{ correct: 8, total: 10 }}
-      />
+      <MemoryRouter>
+        <GameScreen
+          {...defaultProps}
+          gameState="completed"
+          score={{ correct: 8, total: 10 }}
+        />
+      </MemoryRouter>
     );
 
     const playAgainButton = screen.getByText('buttons.playAgain');
@@ -151,7 +174,11 @@ describe('GameScreen', () => {
   });
 
   test('renders character display with current question', () => {
-    render(<GameScreen {...defaultProps} />);
+    render(
+      <MemoryRouter>
+        <GameScreen {...defaultProps} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('あ')).toBeInTheDocument();
   });
@@ -166,7 +193,11 @@ describe('GameScreen', () => {
       category: 'verbs'
     };
 
-    render(<GameScreen {...defaultProps} currentQuestion={verbQuestion} />);
+    render(
+      <MemoryRouter>
+        <GameScreen {...defaultProps} currentQuestion={verbQuestion} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('食')).toBeInTheDocument();
     expect(screen.getByText('た')).toBeInTheDocument();
@@ -183,14 +214,22 @@ describe('GameScreen', () => {
       category: 'kanji'
     };
 
-    render(<GameScreen {...defaultProps} currentQuestion={kanjiQuestion} />);
+    render(
+      <MemoryRouter>
+        <GameScreen {...defaultProps} currentQuestion={kanjiQuestion} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('山')).toBeInTheDocument();
     expect(screen.getByText('やま')).toBeInTheDocument();
   });
 
   test('renders category name from translation', () => {
-    render(<GameScreen {...defaultProps} />);
+    render(
+      <MemoryRouter>
+        <GameScreen {...defaultProps} />
+      </MemoryRouter>
+    );
 
     // The category name is looked up via CATEGORY_INFO and translated
     expect(screen.getByText('categories.hiragana.name')).toBeInTheDocument();
@@ -198,11 +237,13 @@ describe('GameScreen', () => {
 
   test('handles 0% accuracy on completion', () => {
     render(
-      <GameScreen
-        {...defaultProps}
-        gameState="completed"
-        score={{ correct: 0, total: 10 }}
-      />
+      <MemoryRouter>
+        <GameScreen
+          {...defaultProps}
+          gameState="completed"
+          score={{ correct: 0, total: 10 }}
+        />
+      </MemoryRouter>
     );
 
     expect(screen.getByText('0%')).toBeInTheDocument();
@@ -210,11 +251,13 @@ describe('GameScreen', () => {
 
   test('handles 0 total (edge case) on completion', () => {
     render(
-      <GameScreen
-        {...defaultProps}
-        gameState="completed"
-        score={{ correct: 0, total: 0 }}
-      />
+      <MemoryRouter>
+        <GameScreen
+          {...defaultProps}
+          gameState="completed"
+          score={{ correct: 0, total: 0 }}
+        />
+      </MemoryRouter>
     );
 
     expect(screen.getByText('0%')).toBeInTheDocument();

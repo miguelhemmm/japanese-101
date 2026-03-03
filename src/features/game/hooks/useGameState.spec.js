@@ -1,4 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { useGameState } from './useGameState';
 
 // Mock the data module
@@ -18,6 +19,12 @@ jest.mock('../../data', () => ({
 }));
 
 describe('useGameState', () => {
+  const wrapper = ({ children }) => (
+    <MemoryRouter initialEntries={['/']}>
+      {children}
+    </MemoryRouter>
+  );
+
   const mockCharacters = [
     { id: 'h_a', character: 'あ', romanji: ['a'], english: [], category: 'hiragana' },
     { id: 'h_i', character: 'い', romanji: ['i'], english: [], category: 'hiragana' },
@@ -44,19 +51,19 @@ describe('useGameState', () => {
 
   describe('initial state', () => {
     test('starts in SELECTING state', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       expect(result.current.gameState).toBe('selecting');
     });
 
     test('has null currentQuestion initially', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       expect(result.current.currentQuestion).toBeNull();
     });
 
     test('has zero scores initially', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       expect(result.current.score).toEqual({ correct: 0, total: 0 });
       expect(result.current.streak).toBe(0);
@@ -65,7 +72,7 @@ describe('useGameState', () => {
 
   describe('initializeGame', () => {
     test('filters by selected categories', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -76,7 +83,7 @@ describe('useGameState', () => {
     });
 
     test('filters by multiple categories', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana', 'katakana']);
@@ -86,7 +93,7 @@ describe('useGameState', () => {
     });
 
     test('transitions to PLAYING state', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -99,7 +106,7 @@ describe('useGameState', () => {
       // Run multiple times and check that order varies
       const orders = [];
       for (let i = 0; i < 10; i++) {
-        const { result } = renderHook(() => useGameState(mockCharacters));
+        const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
         act(() => {
           result.current.initializeGame(['hiragana']);
@@ -115,7 +122,7 @@ describe('useGameState', () => {
     });
 
     test('resets score and streak', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       // Initialize and submit some answers
       act(() => {
@@ -136,7 +143,7 @@ describe('useGameState', () => {
     });
 
     test('sets currentQuestion to first question', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -149,7 +156,7 @@ describe('useGameState', () => {
 
   describe('normalizeAnswer (tested via submitAnswer)', () => {
     test('normalizes to lowercase', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -166,7 +173,7 @@ describe('useGameState', () => {
     });
 
     test('trims whitespace', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -184,7 +191,7 @@ describe('useGameState', () => {
 
   describe('isAnswerCorrect (tested via submitAnswer)', () => {
     test('validates romanji correctly', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -200,7 +207,7 @@ describe('useGameState', () => {
     });
 
     test('rejects wrong romanji', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -214,7 +221,7 @@ describe('useGameState', () => {
     });
 
     test('validates English for kanji', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['kanji']);
@@ -228,7 +235,7 @@ describe('useGameState', () => {
     });
 
     test('validates English for verbs', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['verbs']);
@@ -242,7 +249,7 @@ describe('useGameState', () => {
     });
 
     test('validates Spanish for kanji', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['kanji']);
@@ -256,7 +263,7 @@ describe('useGameState', () => {
     });
 
     test('validates Spanish for verbs', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['verbs']);
@@ -272,7 +279,7 @@ describe('useGameState', () => {
 
   describe('submitAnswer', () => {
     test('increments score for correct answer', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -289,7 +296,7 @@ describe('useGameState', () => {
     });
 
     test('does not increment correct count for wrong answer', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -304,7 +311,7 @@ describe('useGameState', () => {
     });
 
     test('increments streak for correct answer', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -320,7 +327,7 @@ describe('useGameState', () => {
     });
 
     test('resets streak for incorrect answer', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -347,7 +354,7 @@ describe('useGameState', () => {
     });
 
     test('transitions to FEEDBACK state', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -361,7 +368,7 @@ describe('useGameState', () => {
     });
 
     test('sets lastAnswer with correct info', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -385,7 +392,7 @@ describe('useGameState', () => {
     });
 
     test('does nothing if not in PLAYING state', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       // Try to submit without initializing (still in SELECTING)
       act(() => {
@@ -399,7 +406,7 @@ describe('useGameState', () => {
 
   describe('nextQuestion', () => {
     test('advances index', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -419,7 +426,7 @@ describe('useGameState', () => {
     });
 
     test('transitions to COMPLETED at end', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       // Initialize with just 1 category that has few items
       act(() => {
@@ -440,7 +447,7 @@ describe('useGameState', () => {
     });
 
     test('clears lastAnswer when advancing', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -460,7 +467,7 @@ describe('useGameState', () => {
     });
 
     test('transitions back to PLAYING state', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -485,7 +492,7 @@ describe('useGameState', () => {
 
   describe('resetGame', () => {
     test('returns to SELECTING state', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -499,7 +506,7 @@ describe('useGameState', () => {
     });
 
     test('clears questions', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -514,7 +521,7 @@ describe('useGameState', () => {
     });
 
     test('resets all state', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -536,7 +543,7 @@ describe('useGameState', () => {
 
   describe('progress', () => {
     test('tracks current position correctly', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);
@@ -555,7 +562,7 @@ describe('useGameState', () => {
     });
 
     test('tracks total correctly', () => {
-      const { result } = renderHook(() => useGameState(mockCharacters));
+      const { result } = renderHook(() => useGameState(mockCharacters), { wrapper });
 
       act(() => {
         result.current.initializeGame(['hiragana']);

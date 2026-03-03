@@ -44,16 +44,17 @@ describe('CategorySelection', () => {
   test('toggling categories updates selection state', () => {
     render(<CategorySelection onStartGame={mockOnStartGame} />);
 
-    // Find the hiragana card by its icon and click it
+    // Find the hiragana card by its icon and click the select button
     const hiraganaIcon = screen.getByText('あ');
-    const hiraganaCard = hiraganaIcon.closest('button');
-    fireEvent.click(hiraganaCard);
+    const hiraganaSelectButton = hiraganaIcon.closest('.category-card__select');
+    const hiraganaCard = hiraganaIcon.closest('.category-card');
+    fireEvent.click(hiraganaSelectButton);
 
     // Card should now have selected class
     expect(hiraganaCard).toHaveClass('selected');
 
     // Click again to deselect
-    fireEvent.click(hiraganaCard);
+    fireEvent.click(hiraganaSelectButton);
     expect(hiraganaCard).not.toHaveClass('selected');
   });
 
@@ -69,8 +70,8 @@ describe('CategorySelection', () => {
 
     // Select a category
     const hiraganaIcon = screen.getByText('あ');
-    const hiraganaCard = hiraganaIcon.closest('button');
-    fireEvent.click(hiraganaCard);
+    const hiraganaSelectButton = hiraganaIcon.closest('.category-card__select');
+    fireEvent.click(hiraganaSelectButton);
 
     // Start button should be enabled
     const startButton = screen.getByText('buttons.startPractice').closest('button');
@@ -82,17 +83,18 @@ describe('CategorySelection', () => {
 
     // Select one category
     const hiraganaIcon = screen.getByText('あ');
-    const hiraganaCard = hiraganaIcon.closest('button');
-    fireEvent.click(hiraganaCard);
+    const hiraganaSelectButton = hiraganaIcon.closest('.category-card__select');
+    fireEvent.click(hiraganaSelectButton);
 
-    expect(screen.getByText('(1 selected)')).toBeInTheDocument();
+    // The count is rendered as "(1 selected)" where "selected" is the translation key
+    expect(screen.getByText(/\(1 selected\)/)).toBeInTheDocument();
 
     // Select another category
     const katakanaIcon = screen.getByText('ア');
-    const katakanaCard = katakanaIcon.closest('button');
-    fireEvent.click(katakanaCard);
+    const katakanaSelectButton = katakanaIcon.closest('.category-card__select');
+    fireEvent.click(katakanaSelectButton);
 
-    expect(screen.getByText('(2 selected)')).toBeInTheDocument();
+    expect(screen.getByText(/\(2 selected\)/)).toBeInTheDocument();
   });
 
   test('onStartGame called with selected categories', () => {
@@ -100,19 +102,19 @@ describe('CategorySelection', () => {
 
     // Select hiragana and katakana
     const hiraganaIcon = screen.getByText('あ');
-    const hiraganaCard = hiraganaIcon.closest('button');
-    fireEvent.click(hiraganaCard);
+    const hiraganaSelectButton = hiraganaIcon.closest('.category-card__select');
+    fireEvent.click(hiraganaSelectButton);
 
     const katakanaIcon = screen.getByText('ア');
-    const katakanaCard = katakanaIcon.closest('button');
-    fireEvent.click(katakanaCard);
+    const katakanaSelectButton = katakanaIcon.closest('.category-card__select');
+    fireEvent.click(katakanaSelectButton);
 
     // Click start button
     const startButton = screen.getByText('buttons.startPractice').closest('button');
     fireEvent.click(startButton);
 
     expect(mockOnStartGame).toHaveBeenCalledTimes(1);
-    expect(mockOnStartGame).toHaveBeenCalledWith(['hiragana', 'katakana']);
+    expect(mockOnStartGame).toHaveBeenCalledWith(['hiragana', 'katakana'], 'all');
   });
 
   test('onStartGame not called when no categories selected', () => {
